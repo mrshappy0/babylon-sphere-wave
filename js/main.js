@@ -11,12 +11,12 @@ function startGame() {
   canvas.style.width = "100%";
   canvas.style.height = "100%";
   scene = createScene();
-  engine.runRenderLoop(function() {
+  engine.runRenderLoop(function () {
     scene.render();
   });
 }
 
-var createScene = function() {
+var createScene = function () {
   var scene = new BABYLON.Scene(engine);
   // scene.clearColor = new BABYLON.Color3(1, 2, 0.5);
   // scene.ambientColor = new BABYLON.Color3(4, 1, 0);
@@ -48,7 +48,7 @@ var createScene = function() {
     sphere = BABYLON.Mesh.CreateSphere("mySphere" + index, 32, 2, scene);
     sphere.position.x = 3 * index - 9;
     sphere.position.y = 2;
-    console.log(sphere.position.z)
+    console.log(sphere.position.z);
     sphereMaterials[index] = new BABYLON.StandardMaterial(
       "sphereMaterial" + index,
       scene
@@ -57,12 +57,12 @@ var createScene = function() {
     mirrorMaterial.reflectionTexture.renderList.push(sphere);
     return sphere;
   });
-
   sphereMaterials.forEach((material, index) => {
-    material.ambientColor = new BABYLON.Color3(0, 0.5, 0);
-    material.diffuseColor = new BABYLON.Color3(index, 0, 0);
-    material.specularColor = new BABYLON.Color3(0, 0, index + 1);
-    material.specularPower = index;
+    material.diffuseTexture = new BABYLON.Texture("images/free.png", scene);
+    // material.ambientColor = new BABYLON.Color3(0, 0.5, 0);
+    // material.diffuseColor = new BABYLON.Color3(index, 0, 0);
+    // material.specularColor = new BABYLON.Color3(0, 0, index + 1);
+    // material.specularPower = index;
   });
 
   // New Universal Camera with Target
@@ -90,7 +90,8 @@ var createScene = function() {
     // console.log(spheres)
     spheres.forEach((sphere, index) => {
       // sphere.position.z = Math.sin(counter);
-      sphere.position.y += 0.19 *index* Math.sin((index * counter)/2);
+      // sphere.position.y += 0.19 * index * Math.sin((index * counter) / 2);
+      sphere.rotation.y += 0.1
       counter += 0.005;
     });
   });
@@ -98,6 +99,6 @@ var createScene = function() {
 };
 
 // Resize
-window.addEventListener("resize", function(camera) {
+window.addEventListener("resize", function (camera) {
   engine.resize();
 });
